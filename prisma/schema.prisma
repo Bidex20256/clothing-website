@@ -1,0 +1,87 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id           String     @id @default(cuid())
+  email        String     @unique
+  passwordHash String
+  name         String
+  phone        String?
+  address      String?
+  city         String?
+  state        String?
+  zip          String?
+  country      String?    @default("Nigeria")
+  profileImage String?
+  createdAt    DateTime   @default(now())
+  updatedAt    DateTime   @updatedAt
+  cartItems    CartItem[]
+  orders       Order[]
+}
+
+model Product {
+  id          String     @id @default(cuid())
+  name        String
+  slug        String     @unique
+  description String
+  price       Float
+  promoPrice  Float?
+  images      String
+  sizes       String
+  colors      String
+  category    String
+  ageGroup    String
+  popularity  Int        @default(0)
+  isNew       Boolean    @default(false)
+  isPromo     Boolean    @default(false)
+  createdAt   DateTime   @default(now())
+  cartItems   CartItem[]
+}
+
+model CartItem {
+  id        String  @id @default(cuid())
+  userId    String?
+  sessionId String?
+  productId String
+  quantity  Int     @default(1)
+  size      String
+  color     String
+  product   Product @relation(fields: [productId], references: [id], onDelete: Cascade)
+  user      User?   @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@unique([userId, productId, size, color])
+  @@unique([sessionId, productId, size, color])
+}
+
+model Order {
+  id         String   @id @default(cuid())
+  userId     String
+  items      String
+  shipping   String
+  total      Float
+  status     String   @default("pending")
+  createdAt  DateTime @default(now())
+  user       User     @relation(fields: [userId], references: [id])
+}
+
+model BlogPost {
+  id        String   @id @default(cuid())
+  title     String
+  slug      String   @unique
+  excerpt   String
+  content   String
+  image     String
+  createdAt DateTime @default(now())
+}
+
+model Newsletter {
+  id        String   @id @default(cuid())
+  email     String   @unique
+  createdAt DateTime @default(now())
+}
