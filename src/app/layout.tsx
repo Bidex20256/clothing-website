@@ -30,6 +30,14 @@ export const metadata: Metadata = {
     description: "Premium fashion for the whole family.",
     type: "website",
   },
+  icons: {
+    icon: [
+      { url: "/icon.svg", type: "image/svg+xml" },
+      { url: "/icon.png", type: "image/png" },
+    ],
+    apple: "/icon.png",
+    shortcut: "/icon.png",
+  },
 };
 
 export default async function RootLayout({
