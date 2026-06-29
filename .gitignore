@@ -1,6 +1,7 @@
 node_modules
 .next
 .env
+.cursor/mcp.json
 *.db
 *.db-journal
 .DS_Store
