@@ -495,6 +495,12 @@ const blogPosts = [
 ];
 
 async function main() {
+  const existingProducts = await prisma.product.count();
+  if (existingProducts > 0) {
+    console.log("Database already has products — skipping seed.");
+    return;
+  }
+
   await prisma.cartItem.deleteMany();
   await prisma.order.deleteMany();
   await prisma.newsletter.deleteMany();

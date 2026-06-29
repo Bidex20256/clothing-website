@@ -17,6 +17,9 @@ const sans = DM_Sans({
   variable: "--font-sans",
 });
 
+// Database-backed pages must render at request time (Vercel has no SQLite file DB).
+export const dynamic = "force-dynamic";
+
 export const metadata: Metadata = {
   title: {
     default: "Temir | Modern Clothing for Every Generation",
@@ -29,14 +32,6 @@ export const metadata: Metadata = {
     title: "Temir | Modern Clothing for Every Generation",
     description: "Premium fashion for the whole family.",
     type: "website",
-  },
-  icons: {
-    icon: [
-      { url: "/icon.svg", type: "image/svg+xml" },
-      { url: "/icon.png", type: "image/png" },
-    ],
-    apple: "/icon.png",
-    shortcut: "/icon.png",
   },
 };
 
